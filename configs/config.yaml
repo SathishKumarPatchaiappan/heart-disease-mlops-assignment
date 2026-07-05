@@ -1,0 +1,28 @@
+project:
+  name: heart-disease-mlops
+  random_state: 42
+
+data:
+  raw_path: data/raw/processed.cleveland.data
+  processed_path: data/processed/heart_disease_clean.csv
+  test_size: 0.20
+
+training:
+  cv_folds: 5
+  scoring: roc_auc
+  n_jobs: 1
+  experiment_name: heart-disease-classification
+  tracking_uri: ./mlruns
+  model_output_path: models/heart_disease_pipeline.joblib
+  results_output_path: reports/model_results.csv
+
+models:
+  logistic_regression:
+    C: [0.01, 0.1, 1.0, 10.0]
+    solver: [liblinear, lbfgs]
+    class_weight: [null, balanced]
+  random_forest:
+    n_estimators: [100, 200]
+    max_depth: [null, 5, 10]
+    min_samples_split: [2, 5]
+    class_weight: [null, balanced]
